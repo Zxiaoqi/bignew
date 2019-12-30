@@ -13,6 +13,7 @@
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
+    <script src="../admin/js/http.js"></script>
 </head>
 
 <body>
@@ -72,6 +73,13 @@
             </div>
         </div>
     </div>
+    <script type="text/html" id="category_list">
+        <option>所有分类</option>
+        {{ each data }}
+        <option data-id={{$value.id}}>{{ $value.name }}</option>
+        {{ /each }}
+    </script>
+    <script src="../admin/js/article_list.js"></script>
 </body>
 
 </html>
