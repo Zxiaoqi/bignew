@@ -79,6 +79,21 @@
         <option data-id={{$value.id}}>{{ $value.name }}</option>
         {{ /each }}
     </script>
+    <script type="text/html" id="article_list">
+        {{ each data.data v }}
+        <tr>
+            <td>{{ v.title }}</td>
+            <td>{{ v.author }}</td>
+            <td>{{ v.category }}</td>
+            <td class="text-center">{{ v.date }}</td>
+            <td class="text-center">{{ v.state }}</td>
+            <td class="text-center">
+                <a href="article_edit.html?id={{ v.id }}" data-id="{{ v.id }}" class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:void(0);" data-id="{{ v.id }}" class="btn btn-danger btn-xs delete">删除</a>
+            </td>
+        </tr>
+        {{ /each }}
+    </script>
     <script src="../admin/js/article_list.js"></script>
 </body>
 
