@@ -12,11 +12,6 @@ $(function () {
     }
     list();
     //新增分类/修改
-    $(".btn-success").on("click", function () {
-        $("#myModal").modal({
-            keyboard: true
-        });
-    });
     $("button.btn-primary").on("click", function () {
         let name = $("#category-name").val(),
             slug = $("#slug-text").val();
@@ -65,12 +60,10 @@ $(function () {
     });
     //编辑类别
     let id;
-    $("tbody").on("click", ".btn-info", function () {
-        // console.log(id, name, slug);
+    $("#myModal").on("show.bs.modal", function (e) {
+        // console.log(e.relatedTarget);
         id = $(this).attr("data-id");
-        $("#myModal").modal({
-            keyboard: true
-        });
+        $("button.btn-primary").text($(e.relatedTarget).text())
     });
 
     $("tbody").on("click", ".btn-danger", function () {

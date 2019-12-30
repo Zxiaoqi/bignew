@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="./css/iconfont.css">
     <link rel="stylesheet" href="./css/main.css">
     <script src="./libs/jquery-1.12.4.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
     <script src="../admin/js/http.js"></script>
+    <script src="./libs/jquery.twbsPagination.js"></script>
 </head>
 
 <body>
@@ -37,7 +39,8 @@
                             <option value="草稿">草稿</option>
                             <option value="已发布">已发布</option>
                         </select>
-                        <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
+                        <button id="btnSearch" class="btn btn-default btn-sm" data-toggle="modal"
+                            data-target="#myModal">筛选</button>
                     </form>
                 </div>
                 <div class="col-xs-6">
@@ -70,6 +73,56 @@
                 </tbody>
             </table>
             <div class="row text-center">
+                <nav>
+                    <ul class="pagination">
+                        <li class=""><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">2</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框 -->
+    <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">新增分类</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="category-name" class="control-label">名称:</label>
+                            <input type="text" class="form-control" id="category-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="slug-text" class="control-label">slug:</label>
+                            <input class="form-control" id="slug-text"></input>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- 提示框 -->
+    <div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body msg-body">
+                </div>
             </div>
         </div>
     </div>
@@ -80,16 +133,17 @@
         {{ /each }}
     </script>
     <script type="text/html" id="article_list">
-        {{ each data.data v }}
+        {{ each data }}
         <tr>
-            <td>{{ v.title }}</td>
-            <td>{{ v.author }}</td>
-            <td>{{ v.category }}</td>
-            <td class="text-center">{{ v.date }}</td>
-            <td class="text-center">{{ v.state }}</td>
+            <td>{{ $value.title }}</td>
+            <td>{{ $value.author }}</td>
+            <td>{{ $value.category }}</td>
+            <td class="text-center">{{ $value.date }}</td>
+            <td class="text-center">{{ $value.state }}</td>
             <td class="text-center">
-                <a href="article_edit.html?id={{ v.id }}" data-id="{{ v.id }}" class="btn btn-default btn-xs">编辑</a>
-                <a href="javascript:void(0);" data-id="{{ v.id }}" class="btn btn-danger btn-xs delete">删除</a>
+                <a href="article_edit.html?id={{ $value.id }}" data-id="{{ $value.id }}"
+                    class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:void(0);" data-id="{{ $value.id }}" class="btn btn-danger btn-xs delete">删除</a>
             </td>
         </tr>
         {{ /each }}
