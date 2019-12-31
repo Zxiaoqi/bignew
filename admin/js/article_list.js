@@ -1,4 +1,5 @@
 $(function () {
+    //文章类别
     $.ajax({
         url: BigNew.category_list,
         success: function (artList) {
@@ -7,12 +8,12 @@ $(function () {
         }
     });
 
-    function query() {
+    //获取所有数据
+    function query(Page) {
         $.ajax({
             url: BigNew.article_query,
-            type: 'get',
-            dataType: 'json',
             data: {
+                page: Page,
                 perpage: 10, //每页返回10条数据
                 type: $('#selCategory').val(),
                 state: $('#selStatus').val(),
@@ -20,21 +21,19 @@ $(function () {
             success: function (backData) {
                 // console.log(backData);
                 $('.table>tbody').html(template('article_list', backData.data));
+                let totalPage = backData.data.totalPage
+                loadPagination(totalPage, Page)
             }
         });
     }
     query();
-    //
-    // $("#myModal").on("show.bs.modal", function (e) {
-    //     $("button.btn-primary").text($(e.relatedTarget).text())
-    // })
     //
     $('#btnSearch').on("click", function (e) {
         e.preventDefault();
         query();
     });
     $('#btnSearch').trigger('click');
-
+    //删除文章
     $("tbody").on("click", "a.delete", function () {
         $.ajax({
             url: BigNew.article_delete,
@@ -47,38 +46,32 @@ $(function () {
                     keyload: true
                 });
                 $(".modal-body").text(artdel.msg)
+                if (artdel.code === 204) {
+                    query();
+                }
             }
         })
     })
-
-    $("#selCategory").on('change', function () {
-        let txt = $(this).val();
-        let id = $("option:contains(" + txt + ")").attr("data-id");
-        $.ajax({
-            url: BigNew.article_search,
-            type: 'get',
-            data: {
-                id
-            },
-            dataType: 'json',
-            success: function (searchback) {
-                // console.log(searchback);
-                const sb = searchback.data;
-                const result = `<tr>
-                <td>${sb.title}</td>
-                <td>${sb.author}</td>
-                <td>${txt}</td>
-                <td class="text-center">${sb.date}</td>
-                <td class="text-center">${sb.state}</td>
-                <td class="text-center">
-                    <a href="article_edit.html?id=${sb.id}" data-id="${sb.id}"
-                        class="btn btn-default btn-xs">编辑</a>
-                    <a href="javascript:void(0);" data-id="${sb.id}" class="btn btn-danger btn-xs delete">删除</a>
-                </td>
-            </tr>`;
-                $('.table>tbody').html(result);
+    //分页器
+    function loadPagination(totalPage, startPage) {
+        //(1)先销毁上一次的分页数据
+        $('#pagination').twbsPagination('destroy');
+        //(2)加载分页插件
+        $('#pagination').twbsPagination({
+            totalPages: totalPage,
+            startPage: startPage,
+            visiblePages: 7,
+            first: '首页',
+            prev: '上一页',
+            next: '下一页',
+            last: '尾页',
+            onPageClick: function (event, page) {
+                //如果点击的页数与当前页数不一致，则发送ajax请求
+                if (page !== startPage) {
+                    query(page);
+                };
             }
-        })
-    })
-
+        });
+    };
+    
 })

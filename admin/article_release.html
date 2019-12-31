@@ -5,15 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>文章编辑</title>
+    <title>发表文章</title>
     <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="./libs/jedate/css/jeDate-test.css">
+    <link rel="stylesheet" href="./libs/jedate/css/jedate.css">
     <!-- jq -->
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 模板引擎 -->
     <script src="./libs/template-web.js"></script>
+    <script src="./libs/jedate/js/jedate.js"></script>
+    <!-- tinymce富文本编辑器插件 -->
+    <script src="./libs/tinymce/tinymce.min.js"></script>
+    <!-- jsDate + tinumce配置文件 -->
     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="../admin/js/http.js"></script>
 </head>
@@ -21,7 +27,7 @@
 <body>
     <div class="container-fluid">
         <div class="common_title">
-            文章编辑
+            编辑文章
         </div>
         <div class="container-fluid common_con">
             <form class="form-horizontal article_form" id="form">
@@ -43,18 +49,20 @@
                     <div class="col-sm-4">
                         <select class="form-control category" name="categoryId">
                             <option>类别一</option>
-                            <option>类别二</option>
-                            <option>类别三</option>
-                            <option selected>类别四</option>
-                            <option>类别五</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="date">发布时间：</label>
                     <div class="col-sm-4">
-                        <!-- <input type="date"> -->
-                        <input type="text" id="testico" class="form-contro date" name="date">
+                        <div class="jeitem">
+                            <div class="jeinpbox">
+                                <input type="text" name="date" class="jeinput" id="testico" placeholder="YYYY-MM-DD">
+                                <div class="icons jebtns"
+                                    onclick="jeDate('#testico',{trigger:false,format: 'YYYY-MM-DD',theme: { bgcolor: '#00A680', pnColor: '#00DDAA' }})">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,10 +95,10 @@
     </div>
     <script type="text/html" id="category_list">
         {{ each data }}
-        <option data-id={{$value.id}}>{{ $value.name }}</option>
+        <option value={{$value.id}}>{{ $value.name }}</option>
         {{ /each }}
     </script>
-    <script src="../admin/js/article_edit.js"></script>
+    <script src="../admin/js/article_release.js"></script>
 </body>
 
 </html>

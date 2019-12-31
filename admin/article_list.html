@@ -39,8 +39,7 @@
                             <option value="草稿">草稿</option>
                             <option value="已发布">已发布</option>
                         </select>
-                        <button id="btnSearch" class="btn btn-default btn-sm" data-toggle="modal"
-                            data-target="#myModal">筛选</button>
+                        <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
                     </form>
                 </div>
                 <div class="col-xs-6">
@@ -73,47 +72,11 @@
                 </tbody>
             </table>
             <div class="row text-center">
-                <nav>
-                    <ul class="pagination">
-                        <li class=""><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">2</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <!-- 分页器 -->
+                <ul id="pagination" class="pagination-sm"></ul>
             </div>
         </div>
     </div>
-    <!-- 模态框 -->
-    <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">新增分类</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="category-name" class="control-label">名称:</label>
-                            <input type="text" class="form-control" id="category-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="slug-text" class="control-label">slug:</label>
-                            <input class="form-control" id="slug-text"></input>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确定</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <!-- 提示框 -->
     <div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -127,9 +90,9 @@
         </div>
     </div>
     <script type="text/html" id="category_list">
-        <option>所有分类</option>
+        <option value="">所有分类</option>
         {{ each data }}
-        <option data-id={{$value.id}}>{{ $value.name }}</option>
+        <option value={{$value.id}}>{{ $value.name }}</option>
         {{ /each }}
     </script>
     <script type="text/html" id="article_list">
